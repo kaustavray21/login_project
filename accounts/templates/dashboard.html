@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <div class="container">
+     <h2>Welcome, {{ user.username }}!</h2>
+    <p>This is your personal dashboard.</p>
+    <p style="font-size: 1.2rem; margin: 2rem 0; color: #333;">You have logged in <strong style="color: #007bff;">{{ login_count }}</strong> time(s).</p>
+    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+   </div>
+{% endblock %}

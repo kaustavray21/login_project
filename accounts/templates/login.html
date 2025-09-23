@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Login</h2>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        
+        <p>
+            <label for="{{ form.username.id_for_label }}">Username</label>
+            {{ form.username }}
+        </p>
+        
+        <p>
+            <label for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password }}
+        </p>
+
+        {% if form.errors %}
+            <div class="form-errors">
+                {% for field, error_list in form.errors.items %}
+                    {% for error in error_list %}
+                        <p style="color: #dc3545; font-size: 0.875em;">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <button type="submit">Login</button>
+    </form>
+    <a href="{% url 'signup' %}" class="form-link">Don't have an account? Sign Up</a>
+</div>
+{% endblock %}
+
