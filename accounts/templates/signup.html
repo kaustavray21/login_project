@@ -2,40 +2,24 @@
 
 {% block content %}
 <div class="container">
-    <h2>Sign Up</h2>
-    <form method="post" action="{% url 'signup' %}">
+    <h2>Create an Account</h2>
+    <form method="post">
         {% csrf_token %}
         
-        <p>
-            {{ form.username.label_tag }}
-            {{ form.username }}
-            {% for error in form.username.errors %}
-                <p style="color: #dc3545; font-size: 0.875em;">{{ error }}</p>
-            {% endfor %}
-        </p>
-        
-        <p>
-            {{ form.password1.label_tag }}
-            {{ form.password1 }}
-            {% if form.password1.help_text %}
-                <small style="color: #6c757d; display: block; margin-top: 4px;">{{ form.password1.help_text|safe }}</small>
-            {% endif %}
-            {% for error in form.password1.errors %}
-                <p style="color: #dc3545; font-size: 0.875em;">{{ error }}</p>
-            {% endfor %}
-        </p>
+        {% if form.errors %}
+            <div class="form-errors">
+                {% for field, error_list in form.errors.items %}
+                    {% for error in error_list %}
+                        <p style="color: #dc3545; font-size: 0.875em; text-align:left;">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
 
-        <p>
-            {{ form.password2.label_tag }}
-            {{ form.password2 }}
-            {% for error in form.password2.errors %}
-                <p style="color: #dc3545; font-size: 0.875em;">{{ error }}</p>
-            {% endfor %}
-        </p>
+        {{ form.as_p }}
         
-        <button type="submit">Sign Up</button>
+        <button type="submit" class="btn" style="margin-top: 1rem;">Sign Up</button>
     </form>
     <a href="{% url 'login' %}" class="form-link">Already have an account? Login</a>
 </div>
 {% endblock %}
-

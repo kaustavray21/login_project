@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .admin-dashboard-wrapper {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .user-cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem; /* Provides space between the cards */
+        justify-content: center; /* Aligns cards to the center */
+        margin-top: 2rem;
+    }
+
+    .user-card {
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px; /* Creates the rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        padding: 1.5rem;
+        width: 260px; /* Sets a consistent width for each card */
+        text-align: left;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .user-card:hover {
+        transform: translateY(-5px); /* Adds a subtle lift effect on hover */
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .user-card-header {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+        border-bottom: 1px solid #f0f0f0;
+        padding-bottom: 0.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    .user-card-info {
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .user-card-info strong {
+        color: #007bff;
+        font-size: 1.1rem;
+    }
+</style>
+
+<div class="admin-dashboard-wrapper">
+    <h2>Admin Dashboard</h2>
+    <p style="color: #555;">A complete overview of all registered users.</p>
+    
+    <div class="user-cards-container">
+        {% for profile in profiles %}
+            <div class="user-card">
+                <div class="user-card-header">{{ profile.user.username }}</div>
+                <p class="user-card-info">
+                    Total Logins: <strong>{{ profile.login_count }}</strong>
+                </p>
+            </div>
+        {% empty %}
+            <p>No other registered users found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

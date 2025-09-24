@@ -1,11 +1,236 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h2>Welcome to MyApp</h2>
-    <p style="margin-bottom: 2rem; color: #555;">Your simple and secure login solution. Please sign up or log in to continue.</p>
-    <a href="{% url 'login' %}" class="btn">Login</a>
-    <a href="{% url 'signup' %}" class="btn" style="margin-top: 1rem; background-color: #28a745;">Sign Up</a>
-</div>
-{% endblock %}
+<style>
+    .section {
+        padding: 4rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-color);
+    }
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: var(--secondary-color);
+        max-width: 600px;
+        margin: 0 auto 3rem auto;
+    }
 
+    /* Hero Section */
+    .hero {
+        text-align: center;
+        padding: 6rem 2rem;
+    }
+    .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    .hero p {
+        font-size: 1.25rem;
+        color: var(--secondary-color);
+        margin-bottom: 2rem;
+    }
+    .hero .btn {
+        width: auto;
+        padding: 0.8rem 2rem;
+        font-size: 1.1rem;
+    }
+
+    /* Features Section */
+    #features { background-color: var(--card-bg); }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+    .feature-card {
+        background-color: #f8f9fa;
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        text-align: left;
+        border: 1px solid transparent;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        /* ADD THIS FOR A SMOOTH EFFECT */
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    /* ADD THIS NEW HOVER EFFECT */
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+    .feature-card h3 { margin-top: 0; }
+
+    /* Stats Section */
+    #stats { background-color: #001f3f; color: white; }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+    }
+    .stat-item h4 {
+        font-size: 2.5rem;
+        margin: 0;
+    }
+    .stat-item p { margin: 0; opacity: 0.8; }
+    
+    /* About Section */
+    #about { background-color: var(--card-bg); }
+    .about-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: left;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    /* FAQ Section */
+    .faq-container {
+        max-width: 800px;
+        margin: 2rem auto 0 auto;
+        text-align: left;
+    }
+    .faq-item {
+        background-color: var(--card-bg);
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        overflow: hidden;
+    }
+    .faq-question {
+        padding: 1rem 1.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .faq-question::after {
+        content: '+';
+        font-size: 1.5rem;
+        transition: transform 0.2s;
+    }
+    .faq-item.active .faq-question::after {
+        transform: rotate(45deg);
+    }
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        padding: 0 1.5rem;
+        color: var(--secondary-color);
+    }
+    .faq-item.active .faq-answer {
+        padding-bottom: 1rem;
+    }
+</style>
+
+<div class="hero">
+    <h1>Seamless & Secure Authentication</h1>
+    <p>Your simple and secure login solution, built for modern applications.</p>
+    <a href="{% url 'signup' %}" class="btn">Get Started for Free</a>
+</div>
+
+<section id="features" class="section">
+    <h2 class="section-title">Why Choose Logg.in?</h2>
+    <p class="section-subtitle">We provide a robust and developer-friendly platform to handle all your authentication needs with ease.</p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3>Secure by Design</h3>
+            <p>Utilizing Django's battle-tested security features to protect user data against common vulnerabilities.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Admin Dashboard</h3>
+            <p>A powerful admin dashboard to monitor user activity and track key metrics like login counts.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Easy Integration</h3>
+            <p>Clean, well-structured code that can be easily integrated into any new or existing Django project.</p>
+        </div>
+    </div>
+</section>
+
+<section id="stats" class="section">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <h4>10,000+</h4>
+            <p>Users Joined</p>
+        </div>
+        <div class="stat-item">
+            <h4>99.9%</h4>
+            <p>Uptime Guarantee</p>
+        </div>
+        <div class="stat-item">
+            <h4>250k+</h4>
+            <p>Successful Logins</p>
+        </div>
+        <div class="stat-item">
+            <h4>24/7</h4>
+            <p>Support</p>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="section">
+    <h2 class="section-title">About Us</h2>
+    <div class="about-content">
+        <p>Logg.in APP started as a simple project to demonstrate the power and simplicity of Django's authentication system. It has since evolved into a boilerplate solution for developers looking to implement a secure and feature-rich login system quickly. Our mission is to save developers time and provide a reliable foundation for their applications.</p>
+    </div>
+</section>
+
+<section id="faq" class="section">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="faq-container">
+        <div class="faq-item">
+            <div class="faq-question">Is this project open source?</div>
+            <div class="faq-answer">
+                <p>Yes, the entire codebase is available on GitHub. We encourage contributions and feedback from the community to help improve the project.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Can I use this in a commercial project?</div>
+            <div class="faq-answer">
+                <p>Absolutely. The project is licensed under MIT, which allows for use in both personal and commercial projects with very few restrictions.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">How is user data stored?</div>
+            <div class="faq-answer">
+                <p>We leverage Django's built-in authentication models, which securely hash passwords and protect sensitive user information by default.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => i.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+                // Recalculate max-height after toggling class
+                faqItems.forEach(i => {
+                    const ans = i.querySelector('.faq-answer');
+                    if (i.classList.contains('active')) {
+                        ans.style.maxHeight = ans.scrollHeight + 'px';
+                    } else {
+                        ans.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}
