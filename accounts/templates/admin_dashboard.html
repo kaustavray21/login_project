@@ -13,24 +13,24 @@
     .user-cards-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 1.5rem; /* Provides space between the cards */
-        justify-content: center; /* Aligns cards to the center */
+        gap: 1.5rem;
+        justify-content: center;
         margin-top: 2rem;
     }
 
     .user-card {
         background-color: #ffffff;
         border: 1px solid #e0e0e0;
-        border-radius: 12px; /* Creates the rounded corners */
+        border-radius: 12px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
         padding: 1.5rem;
-        width: 260px; /* Sets a consistent width for each card */
+        width: 260px;
         text-align: left;
         transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .user-card:hover {
-        transform: translateY(-5px); /* Adds a subtle lift effect on hover */
+        transform: translateY(-5px);
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
     }
 
@@ -52,23 +52,31 @@
         color: #007bff;
         font-size: 1.1rem;
     }
+    
+    .no-users-message {
+        margin-top: 3rem;
+        color: #6c757d;
+        font-size: 1.1rem;
+    }
 </style>
 
 <div class="admin-dashboard-wrapper">
     <h2>Admin Dashboard</h2>
     <p style="color: #555;">A complete overview of all registered users.</p>
     
-    <div class="user-cards-container">
-        {% for profile in profiles %}
-            <div class="user-card">
-                <div class="user-card-header">{{ profile.user.username }}</div>
-                <p class="user-card-info">
-                    Total Logins: <strong>{{ profile.login_count }}</strong>
-                </p>
-            </div>
-        {% empty %}
-            <p>No other registered users found.</p>
-        {% endfor %}
-    </div>
+    {% if profiles %}
+        <div class="user-cards-container">
+            {% for profile in profiles %}
+                <div class="user-card">
+                    <div class="user-card-header">{{ profile.user.username }}</div>
+                    <p class="user-card-info">
+                        Total Logins: <strong>{{ profile.login_count }}</strong>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-users-message">No other registered users were found.</p>
+    {% endif %}
 </div>
 {% endblock %}
